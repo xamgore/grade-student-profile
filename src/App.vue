@@ -27,6 +27,13 @@ export default {
     height: 100%;
   }
 
+  @media screen and (min-device-width: 480px) {
+    html, body {
+      max-width: 480px;
+      margin: auto;
+    }
+  }
+
   html {
     box-sizing: border-box;
   }
