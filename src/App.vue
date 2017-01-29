@@ -1,20 +1,16 @@
 <template>
   <div id="app">
     <navbar :home="true"></navbar>
-
-    <discipline/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Discipline from './components/discipline/Page'
 import Navbar from './components/Navbar'
 
 export default {
   name: 'app',
-  components: {
-    Navbar, Discipline
-  }
+  components: { Navbar }
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <div class="item">
-    <a :href="'#' + id" class="row" @click="kek">
+    <router-link :to="'/dis/' + id" class="row">
       <div :class="['circle', mark]">{{ score }}</div>
 
       <div class="name"><slot></slot></div>
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -12,10 +12,7 @@
 export default {
   props: ['score', 'mark', 'id'],
   name: 'discipline-item',
-  data: () => ({ }),
-  methods: {
-    kek(e) { console.log(e) }
-  }
+  data: () => ({ })
 }
 </script>
 

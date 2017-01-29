@@ -2,19 +2,19 @@
   <header>
 
     <div>
-      <a v-show="home" class="button" href="/" title="На главную">
+      <router-link to="/" v-show="home" class="button" title="На главную">
         <i class="fa fa-home fa-bg fa-fw"></i>
-      </a>
+      </router-link>
 
       <slot></slot>
     </div>
 
     <div class="right">
-      <a v-show="settings" class="button" href="#" title="Настройки">
+      <router-link to="/settings" v-show="settings" class="button" title="Настройки">
         <i class="fa fa-cog fa-bg fa-fw"></i>
-      </a><a v-show="exit" class="button" href="/sign/out" title="Выход">
+      </router-link><router-link to="/sign/out" v-show="exit" class="button" title="Выход">
         <i class="fa fa-sign-out fa-bg fa-fw"></i>
-      </a>
+      </router-link>
     </div>
 
   </header>

@@ -31,6 +31,7 @@ import Module from './Module'
 const rand = (to, from = 0) => (Math.random() * (to - from) + from) | 0
 
 export default {
+  props: ['id'],
   name: 'discipline',
   components: { Module },
   methods: {
