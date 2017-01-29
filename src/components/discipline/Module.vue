@@ -4,8 +4,14 @@
 
     <div v-for="s in submodules" v-if="!!s.name" class="submodule">
       <span class="name">{{ s.name }}</span>
-      <span class="change" v-if="s.rate == 5">+3</span>
-      <span class="change bad" v-if="s.rate == 3">−5
+
+      <transition name="badge">
+        <span :class="['change', s.rate > s.oldRate ? 'good' : 'bad']"
+              v-if="s.oldRate >= 0 && (s.oldRate != s.rate)">
+          {{ s.rate > s.oldRate ? '+' : '−' }}{{ Math.abs(s.rate - s.oldRate) }}
+        </span>
+      </transition>
+      <!-- <span class="change bad" v-if="s.rate == 3">−5 -->
       </span>
       <div class="rates" style="padding-left: 0.5em; display: flex; flex-direction: column">
         <span style="text-align: right">{{ s.rate }} / {{ s.maxRate }}</span>
@@ -61,6 +67,7 @@ export default {
     padding: 10px;
     background-color: rgba(3, 169, 244, 0.14);
     background-color: rgba(8, 175, 21, 0.14);
+    transition: background 0.5s ease-in;
   }
 
   .strip.danger {
@@ -99,11 +106,16 @@ export default {
     font-size: 0.65em;
     white-space: nowrap;
     text-align: center;
+    transition: all .5s;
   }
 
   .change.bad {
     background-color: #F44336;
     background-color: #f49836;
+  }
+
+  .badge-enter, .badge-leave-to {
+    opacity: 0;
   }
 
   .date {

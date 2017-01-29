@@ -1,5 +1,7 @@
 <template>
-  <div class="page">
+  <div class="page" style="">
+    <button style="position: fixed; right: 5px; top: 8px; background: #00bcd4; color: #fff; border: 0" @click="add">add</button>
+
     <h2 class="title">{{ name }}</h2>
 
     <ul>
@@ -19,15 +21,29 @@
     <module :submodules="[{rate: final, maxRate: 100}]" style="padding: 0">
       Итоговый рейтинг: {{ final }} / 100
     </module>
+
   </div>
 </template>
 
 <script>
 import Module from './Module'
 
+const rand = (to, from = 0) => (Math.random() * (to - from) + from) | 0
+
 export default {
   name: 'discipline',
   components: { Module },
+  methods: {
+    add() {
+      let m = this.modules[rand(this.modules.length)]
+      let s = m.submodules[rand(m.submodules.length)]
+
+      this.modules.forEach(mx => mx.submodules.forEach(sx => { sx.oldRate = NaN }))
+
+      s.oldRate = s.rate
+      s.rate = (s.rate !== s.maxRate) ? s.maxRate : 0
+    }
+  },
   data: () => ({
     name: 'Функциональное программирование',
     type: 'exam',
@@ -44,19 +60,20 @@ export default {
           {
             name: 'Лабораторные занятия',
             maxRate: 5,
-            rate: 5,
+            oldRate: 0,
+            rate: 3,
             date: '25.10.2016'
           },
           {
             name: 'Домашние задания',
             maxRate: 10,
-            rate: 10,
+            rate: 0,
             date: '22.12.2016'
           },
           {
             name: 'Контрольная работа №1',
             maxRate: 8,
-            rate: 8,
+            rate: 0,
             date: '27.10.2016'
           }
         ]
@@ -67,19 +84,19 @@ export default {
           {
             name: 'Лабораторные занятия',
             maxRate: 4,
-            rate: 1,
+            rate: 0,
             date: '23.12.2016'
           },
           {
             name: 'Домашние задания',
             maxRate: 8,
-            rate: 2,
+            rate: 0,
             date: '23.12.2016'
           },
           {
             name: 'Контрольная работа №2',
             maxRate: 8,
-            rate: 3,
+            rate: 0,
             date: '19.12.2016'
           }
         ]
@@ -100,14 +117,14 @@ export default {
           {
             name: 'Проектное задание',
             maxRate: 11,
-            rate: 9
+            rate: 0
           }
         ]
       }
     ],
     exam: {
       maxRate: 40,
-      rate: 28,
+      rate: 0,
       date: '17.01.2017'
     },
     bonus: {
