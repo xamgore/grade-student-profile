@@ -2,7 +2,7 @@
   <header>
 
     <div>
-      <router-link to="/" v-show="home" class="button" title="На главную">
+      <router-link to="/" :event="['mousedown', 'touchstart']" v-show="home" class="button" title="На главную">
         <i class="fa fa-home fa-bg fa-fw"></i>
       </router-link>
 
@@ -10,9 +10,11 @@
     </div>
 
     <div class="right">
-      <router-link to="/settings" v-show="settings" class="button" title="Настройки">
+      <router-link to="/settings" :event="['mousedown', 'touchstart']"
+                   v-show="settings" class="button" title="Настройки">
         <i class="fa fa-cog fa-bg fa-fw"></i>
-      </router-link><router-link to="/sign/out" v-show="exit" class="button" title="Выход">
+      </router-link><router-link to="/sign/out" :event="['mousedown', 'touchstart']"
+                                 v-show="exit" class="button" title="Выход">
         <i class="fa fa-sign-out fa-bg fa-fw"></i>
       </router-link>
     </div>

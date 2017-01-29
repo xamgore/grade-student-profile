@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <router-link :to="'/dis/' + id" class="row">
+    <router-link :to="{ path: '/dis/' + id, mark }" :event="['mousedown']" class="row">
       <div :class="['circle', mark]">{{ score }}</div>
 
       <div class="name"><slot></slot></div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  props: ['score', 'mark', 'id'],
+  props: ['score', 'mark', 'id', 'kek'],
   name: 'discipline-item',
   data: () => ({ })
 }
