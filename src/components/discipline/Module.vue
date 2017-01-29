@@ -1,6 +1,6 @@
 <template>
   <div class="module">
-    <h3 class="strip" :class="{ warning: progress < 0.5 }"><slot></slot></h3>
+    <h3 class="strip" :class="{ warning: progress < threshold }"><slot></slot></h3>
 
     <div v-for="s in submodules" v-if="!!s.name" class="submodule">
       <span class="name">{{ s.name }}</span>
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'module',
-  props: ['submodules'],
+  props: { 'submodules': Array, 'threshold': { default: 0.5 } },
   data: () => ({ }),
   computed: {
     progress() {

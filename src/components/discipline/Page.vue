@@ -18,7 +18,7 @@
       {{ examModule.name }}
     </module>
 
-    <module :submodules="[{rate: final, maxRate: 100}]" style="padding: 0">
+    <module :submodules="[{rate: final, maxRate: 100}]" :threshold="0.6" style="padding: 0">
       Итоговый рейтинг: {{ final }} / 100
     </module>
 
