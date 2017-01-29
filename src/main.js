@@ -9,6 +9,7 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: '/dis/:id(\\d+)', component: Discipline, props: true },
     { path: '*', component: MainPage }
