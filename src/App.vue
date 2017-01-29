@@ -2,18 +2,18 @@
   <div id="app">
     <navbar :home="true"></navbar>
 
-    <disciplines/>
+    <discipline/>
   </div>
 </template>
 
 <script>
-import Disciplines from './components/summary/List'
+import Discipline from './components/discipline/Page'
 import Navbar from './components/Navbar'
 
 export default {
   name: 'app',
   components: {
-    Navbar, Disciplines
+    Navbar, Discipline
   }
 }
 </script>
