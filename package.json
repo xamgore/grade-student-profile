@@ -9,9 +9,11 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "api": "node ./node_modules/json-server/bin/index.js -p 3001 fake-api.json"
   },
   "dependencies": {
+    "json-server": "^0.9.4",
     "vue": "^2.1.0",
     "vue-router": "^2.2.0"
   },
