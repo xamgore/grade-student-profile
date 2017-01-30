@@ -1,6 +1,5 @@
 <template>
-  <div class="page" style="">
-    <button style="position: fixed; right: 5px; top: 8px; background: #00bcd4; color: #fff; border: 0" @click="add">add</button>
+  <div class="page" style="" v-if="name">
 
     <h2 class="title">{{ name }}</h2>
 
@@ -14,7 +13,7 @@
       {{ m.name }}
     </module>
 
-    <module v-show="type === 'exam'" :submodules="examModule.submodules">
+    <module v-if="type === 'exam'" :submodules="examModule.submodules">
       {{ examModule.name }}
     </module>
 
@@ -28,121 +27,45 @@
 <script>
 import Module from './Module'
 
-const rand = (to, from = 0) => (Math.random() * (to - from) + from) | 0
+let timerId
 
 export default {
   props: ['id'],
   name: 'discipline',
   components: { Module },
-  methods: {
-    add() {
-      let m = this.modules[rand(this.modules.length)]
-      let s = m.submodules[rand(m.submodules.length)]
-
-      this.modules.forEach(mx => mx.submodules.forEach(sx => { sx.oldRate = NaN }))
-
-      s.oldRate = s.rate
-      s.rate = (s.rate !== s.maxRate) ? s.maxRate : 0
-    }
-  },
   data: () => ({
-    name: 'Функциональное программирование',
-    type: 'exam',
-    teachers: [
-      'Брагилевский Виталий Николаевич',
-      'Непучкин Максим Валентинович',
-      'Barnaby Marmaduke Aloysius Benjy'
-    ],
-    extraRate: 0,
-    modules: [
-      {
-        name: 'Введение в функциональное программирование и язык Haskell',
-        submodules: [
-          {
-            name: 'Лабораторные занятия',
-            maxRate: 5,
-            oldRate: 0,
-            rate: 3,
-            date: '25.10.2016'
-          },
-          {
-            name: 'Домашние задания',
-            maxRate: 10,
-            rate: 0,
-            date: '22.12.2016'
-          },
-          {
-            name: 'Контрольная работа №1',
-            maxRate: 8,
-            rate: 0,
-            date: '27.10.2016'
-          }
-        ]
-      },
-      {
-        name: 'Классы типов и обобщённые вычисления',
-        submodules: [
-          {
-            name: 'Лабораторные занятия',
-            maxRate: 4,
-            rate: 0,
-            date: '23.12.2016'
-          },
-          {
-            name: 'Домашние задания',
-            maxRate: 8,
-            rate: 0,
-            date: '23.12.2016'
-          },
-          {
-            name: 'Контрольная работа №2',
-            maxRate: 8,
-            rate: 0,
-            date: '19.12.2016'
-          }
-        ]
-      },
-      {
-        name: 'Продвинутый Haskell',
-        submodules: [
-          {
-            name: 'Лабораторные занятия',
-            maxRate: 4,
-            rate: 0
-          },
-          {
-            name: 'Домашние задания',
-            maxRate: 2,
-            rate: 0
-          },
-          {
-            name: 'Проектное задание',
-            maxRate: 11,
-            rate: 0
-          }
-        ]
-      }
-    ],
-    exam: {
-      maxRate: 40,
-      rate: 0,
-      date: '17.01.2017'
-    },
-    bonus: {
-      maxRate: 10,
-      rate: 10,
-      date: '16.01.2017'
-    }
+    name: null,
+    type: '',
+    teachers: [],
+    extraRate: null,
+    modules: [],
+    exam: {},
+    bonus: null
   }),
+  created() {
+    const getDiscipline = () =>
+      axios.get(`http://${window.location.hostname}:3001/disciplines/${this.id}`)  // eslint-disable-line
+        .then(res => {
+          delete res.data.id
+          Object.assign(this, res.data)
+
+          timerId = setTimeout(getDiscipline, 1000)
+        })
+
+    getDiscipline()
+  },
+  destroyed() {
+    clearTimeout(timerId)
+  },
   computed: {
     total() {
       let sum = 0
-      this.modules.forEach(m => m.submodules.forEach(s => { sum += s.rate }))
+      this.modules.forEach(m => m.submodules.forEach(s => { sum += s.rate || 0 }))
       return sum
     },
 
     final() {
-      return this.exam.rate + this.bonus.rate + this.total
+      return (this.exam && this.exam.rate || 0) + (this.bonus && this.bonus.rate || 0) + this.total
     },
 
     examModule() {
@@ -155,7 +78,7 @@ export default {
       subs.push(Object.assign({ name: 'Экзамен по курсу' }, this.exam))
       subs.push(Object.assign({ name: 'Бонусные баллы' }, this.bonus))
 
-      let tip = this.total + this.extraRate < 38 ? '(допуска нет)' : ''
+      let tip = this.total + (this.extraRate || 0) < 38 ? '(допуска нет)' : ''
       return { name: `Экзамен ${tip}`, submodules: subs }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="module">
-    <h3 class="strip" :class="{ warning: progress < threshold }"><slot></slot></h3>
+    <h3 class="strip" :class="{ warning: !submodules.length || progress < threshold }"><slot></slot></h3>
 
     <div v-for="s in submodules" v-if="!!s.name" class="submodule">
       <span class="name">{{ s.name }}</span>
@@ -11,10 +11,9 @@
           {{ s.rate > s.oldRate ? '+' : '−' }}{{ Math.abs(s.rate - s.oldRate) }}
         </span>
       </transition>
-      <!-- <span class="change bad" v-if="s.rate == 3">−5 -->
-      </span>
-      <div class="rates" style="padding-left: 0.5em; display: flex; flex-direction: column">
-        <span style="text-align: right">{{ s.rate }} / {{ s.maxRate }}</span>
+
+      <div v-if="!isNaN(s.maxRate)" class="rates">
+        <span style="text-align: right">{{ (s.rate || 0) }} / {{ s.maxRate }}</span>
         <span class="date">{{ s.date | shortDate }}</span>
       </div>
     </div>
@@ -32,8 +31,8 @@ export default {
       let total = 0, student = 0
 
       for (let s of this.submodules) {
-        student += s.rate
-        total += s.maxRate
+        student += s.rate || 0
+        total += s.maxRate || 0
       }
 
       return student / total
@@ -87,8 +86,15 @@ export default {
     min-height: 2.66em;
   }
 
+  .submodule > * {
+    flex-shrink: 1;
+  }
+
   .submodule .rates {
     white-space: nowrap;
+    padding-left: 0.5em;
+    display: flex;
+    flex-direction: column;
   }
 
   .submodule .name {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['disciplines', !list.length ? 'message' : '']">
+  <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info">
 
     <template v-if="list.length">
       <item v-for="d in list" :score="d.score" :mark="d.mark" :id="d.id">
@@ -29,18 +29,7 @@ export default {
   name: 'disciplines-list',
   components: { Item },
   data: () => ({
-    info: [
-      { id: 1, name: 'Интеллектуальные системы', score: 100, mark: 'A' },
-      { id: 2, name: 'Компьютерная графика', score: 97, mark: 'B' },
-      { id: 3, name: 'Функциональное программирование', score: 61, mark: 'C' },
-      { id: 3, name: 'Функциональное программирование', score: 61, mark: 'D' },
-      { id: 3, name: 'Функциональное программирование', score: 61, mark: 'E' },
-      { id: 4, name: 'Компиляторостроение, философия и ерундистика', score: 97, mark: 'FX' },
-      { id: 4, name: 'Теория формальных языков и автоматных грамматик и какая-нибудь курсовая к этому ещё', score: 38, mark: 'F' },
-      { id: 4, name: 'Левый курс', score: '', mark: '' },
-      { id: 4, name: 'Средний курс', score: '', mark: '' },
-      { id: 4, name: 'Правый курс', score: '', mark: '' }
-    ]
+    info: null
   }),
   computed: {
     list() {
@@ -48,6 +37,12 @@ export default {
       const byMark = (a, b) => pos(a.mark) - pos(b.mark) || b.score - a.score
       return this.info.sort(byMark)
     }
+  },
+  created() {
+    axios.get(`http://${window.location.hostname}:3001/summary`)  // eslint-disable-line
+      .then(res => {
+        this.info = res.data
+      })
   }
 }
 </script>
