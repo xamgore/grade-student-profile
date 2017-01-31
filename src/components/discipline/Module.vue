@@ -3,7 +3,7 @@
     <h3 class="strip" :class="{ warning: !submodules.length || progress < threshold }"><slot></slot></h3>
 
     <div v-for="s in submodules" v-if="!!s.name" class="submodule">
-      <span class="name">{{ s.name }}</span>
+      <div class="name">{{ s.name }}</div>
 
       <transition name="badge">
         <span :class="['change', s.rate > s.oldRate ? 'good' : 'bad']"
@@ -79,18 +79,15 @@ export default {
 
   .submodule {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     color: #333;
     padding: 4px 10px 4px;
     min-height: 2.66em;
   }
 
-  .submodule > * {
-    flex-shrink: 1;
-  }
-
   .submodule .rates {
+    flex-shrink: 0;
+    /*flex-basis: auto;*/
     white-space: nowrap;
     padding-left: 0.5em;
     display: flex;
