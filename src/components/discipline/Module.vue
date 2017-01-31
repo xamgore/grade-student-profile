@@ -1,51 +1,27 @@
 <template>
   <div class="module">
-    <h3 class="strip" :class="{ warning: !submodules.length || progress < threshold }"><slot></slot></h3>
+    <h3 class="strip" :class="{ warning: moduleIsBad }"><slot></slot></h3>
 
-    <div v-for="s in submodules" v-if="!!s.name" class="submodule">
-      <div class="name">{{ s.name }}</div>
-
-      <transition name="badge">
-        <span :class="['change', s.rate > s.oldRate ? 'good' : 'bad']"
-              v-if="s.oldRate >= 0 && (s.oldRate != s.rate)">
-          {{ s.rate > s.oldRate ? '+' : '−' }}{{ Math.abs(s.rate - s.oldRate) }}
-        </span>
-      </transition>
-
-      <div v-if="!isNaN(s.maxRate)" class="rates">
-        <span style="text-align: right">{{ (s.rate || 0) }} / {{ s.maxRate }}</span>
-        <span class="date">{{ s.date | shortDate }}</span>
-      </div>
-    </div>
-
+    <submodule v-for="s in submodules" :s="s" />
   </div>
 </template>
 
 <script>
+import Submodule from './Submodule'
+
 export default {
   name: 'module',
-  props: { 'submodules': Array, 'threshold': { default: 0.5 } },
-  data: () => ({ }),
-  computed: {
-    progress() {
-      let total = 0, student = 0
-
-      for (let s of this.submodules) {
-        student += s.rate || 0
-        total += s.maxRate || 0
-      }
-
-      return student / total
-    }
+  components: { Submodule },
+  props: {
+    'threshold': { default: 0.5 },
+    'submodules': { type: Array, default: () => [] }
   },
-  filters: {
-    shortDate(d) {
-      if (!d) return ''
-
-      let [day, mon] = d.split('.').slice(0, 2)
-      let short = ['янв', 'февр', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
-
-      return `${day} ${short[mon - 1]}`
+  computed: {
+    moduleIsBad() { return !this.submodules.length || this.progress < this.threshold },
+    progress() {
+      const sum = ([maxRate, rate], s) => [maxRate + s.maxRate || 0, rate + s.rate || 0]
+      const [total, student] = this.submodules.reduce(sum, [0, 0])
+      return student / (total || 1)
     }
   }
 }
@@ -75,55 +51,5 @@ export default {
 
   .strip.warning {
     background-color: rgba(242, 179, 2, 0.2);
-  }
-
-  .submodule {
-    display: flex;
-    align-items: center;
-    color: #333;
-    padding: 4px 10px 4px;
-    min-height: 2.66em;
-  }
-
-  .submodule .rates {
-    flex-shrink: 0;
-    /*flex-basis: auto;*/
-    white-space: nowrap;
-    padding-left: 0.5em;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .submodule .name {
-    margin-right: auto;
-  }
-
-  .change {
-    margin-left: 0.5em;
-    padding: 0 5px;
-    border-radius: 7px;
-    background-color: #2196f3;
-    background-color: #13c000;
-    background-color: #44cc75;
-    color: white;
-    font-size: 0.65em;
-    white-space: nowrap;
-    text-align: center;
-    transition: all .5s;
-  }
-
-  .change.bad {
-    background-color: #F44336;
-    background-color: #f49836;
-  }
-
-  .badge-enter, .badge-leave-to {
-    opacity: 0;
-  }
-
-  .date {
-    color: #bbb;
-    font-size: 0.7em;
-    text-align: right;
   }
 </style>

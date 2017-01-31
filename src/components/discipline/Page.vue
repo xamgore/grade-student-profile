@@ -1,5 +1,5 @@
 <template>
-  <div class="page" style="" v-if="name">
+  <div class="page" v-if="name">
 
     <h2 class="title">{{ name }}</h2>
 
@@ -65,7 +65,8 @@ export default {
     },
 
     final() {
-      return (this.exam && this.exam.rate || 0) + (this.bonus && this.bonus.rate || 0) + this.total
+      return (this.exam && this.exam.rate || 0) +
+             (this.bonus && this.bonus.rate || 0) + this.total
     },
 
     examModule() {
