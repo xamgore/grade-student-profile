@@ -24,6 +24,7 @@
 
 <script>
 import Item from './Item'
+import api from '../../api'
 
 export default {
   name: 'disciplines-list',
@@ -39,10 +40,8 @@ export default {
     }
   },
   created() {
-    axios.get(`http://${window.location.hostname}:3001/summary`)  // eslint-disable-line
-      .then(res => {
-        this.info = res.data
-      })
+    api.get(`/summary`)
+      .then(res => { this.info = res.data })
   }
 }
 </script>

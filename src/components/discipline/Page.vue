@@ -26,8 +26,7 @@
 
 <script>
 import Module from './Module'
-
-let timerId
+import api from '../../api'
 
 export default {
   props: ['id'],
@@ -43,19 +42,11 @@ export default {
     bonus: null
   }),
   created() {
-    const getDiscipline = () =>
-      axios.get(`http://${window.location.hostname}:3001/disciplines/${this.id}`)  // eslint-disable-line
-        .then(res => {
-          delete res.data.id
-          Object.assign(this, res.data)
-
-          timerId = setTimeout(getDiscipline, 1000)
-        })
-
-    getDiscipline()
-  },
-  destroyed() {
-    clearTimeout(timerId)
+    api.get(`/disciplines/${this.id}`)
+      .then(res => {
+        delete res.data.id
+        Object.assign(this, res.data)
+      })
   },
   computed: {
     total() {
