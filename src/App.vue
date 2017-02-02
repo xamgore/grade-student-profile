@@ -2,7 +2,7 @@
   <div id="app">
     <navbar></navbar>
 
-    <div id="#content">
+    <div id="content">
       <transition :name="direction">
         <router-view class="child-view"></router-view>
       </transition>
@@ -32,7 +32,7 @@ export default {
     box-sizing: inherit;
   }
 
-  html, body, #app, #content {
+  html, body, #app {
     height: 100%;
   }
 
