@@ -46,7 +46,11 @@ export default {
       .then(res => {
         delete res.data.id
         Object.assign(this, res.data)
+        window.localStorage.setItem(`dis${this.id}`, JSON.stringify(res.data))
       })
+
+    let data = window.localStorage.getItem(`dis${this.id}`)
+    if (data !== null) Object.assign(this, JSON.parse(data))
   },
   computed: {
     total() {

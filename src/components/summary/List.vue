@@ -41,7 +41,13 @@ export default {
   },
   created() {
     api.get(`/summary`)
-      .then(res => { this.info = res.data })
+      .then(res => {
+        this.info = res.data
+        window.localStorage.setItem(`summary`, JSON.stringify(res.data))
+      })
+
+    let data = window.localStorage.getItem(`summary`)
+    if (data !== null) this.info = JSON.parse(data)
   }
 }
 </script>
