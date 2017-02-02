@@ -12,7 +12,7 @@ const router = new Router({
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
-    { path: '/dis/:id(\\d+)', component: Discipline, props: true },
+    { name: 'dis', path: '/dis/:id(\\d+)', component: Discipline, props: true },
     { name: 'settings', path: '/settings', component: Settings },
     { name: 'main', path: '/', component: MainPage },
     { path: '*', redirect: { name: 'main' } }

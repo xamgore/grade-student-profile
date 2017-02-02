@@ -4,6 +4,7 @@
     <opt v-model="val">Упрощённая схема цветов для зачётов</opt>
     <opt disabled>Здравый смысл у преподавателей</opt>
     <opt disabled>Повышенная стипендия</opt>
+    <opt>Отключить анимации</opt>
     <opt disabled>ПМ лучше ИТ</opt>
 
     <div style="display:flex;justify-content:center; margin-top:2em">
@@ -26,7 +27,7 @@ export default {
 
 <style scoped>
   .page {
-    margin: 10px;
+    padding: 10px;
   }
 
   .exit {

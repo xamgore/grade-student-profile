@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <navbar></navbar>
-    <router-view></router-view>
+
+    <div id="#content">
+      <transition :name="direction">
+        <router-view class="child-view"></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -10,7 +15,15 @@ import Navbar from './components/Navbar'
 
 export default {
   name: 'app',
-  components: { Navbar }
+  components: { Navbar },
+  data: () => ({ direction: 'fade' }),
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      const toRight = from.name === 'settings' || from.name === 'dis' && to.name !== 'settings'
+      this.direction = toRight ? 'slide-right' : 'slide-left'
+      next()
+    })
+  }
 }
 </script>
 
@@ -19,7 +32,7 @@ export default {
     box-sizing: inherit;
   }
 
-  html, body, #app {
+  html, body, #app, #content {
     height: 100%;
   }
 
@@ -41,7 +54,7 @@ export default {
     background-color: rgba(231, 231, 231, 0.29);
   }
 
-  #app {
+  #app, #content {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -51,8 +64,37 @@ export default {
     flex-shrink: 0;
   }
 
+  #content {
+    position: relative;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  .child-view {
+    width: 100%;
+    position: absolute;
+    /*transition: all .5s cubic-bezier(.55,0,.1,1);*/
+    transition: all .5s ease;
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s ease;
+  }
+
+  .slide-left-enter, .slide-right-leave-active {
+    opacity: 0;
+    transform: translate(30px, 0);
+  }
+
+  .slide-left-leave-active, .slide-right-enter {
+    opacity: 0;
+    transform: translate(-30px, 0);
   }
 </style>
