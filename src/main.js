@@ -13,8 +13,9 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: '/dis/:id(\\d+)', component: Discipline, props: true },
-    { path: '/settings', component: Settings },
-    { path: '*', component: MainPage }
+    { name: 'settings', path: '/settings', component: Settings },
+    { name: 'main', path: '/', component: MainPage },
+    { path: '*', redirect: { name: 'main' } }
   ]
 })
 

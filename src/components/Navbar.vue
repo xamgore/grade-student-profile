@@ -2,20 +2,16 @@
   <header>
 
     <div>
-      <router-link to="/" :event="['mousedown', 'touchstart']" v-show="home" class="button" title="На главную">
-        <i class="fa fa-home fa-bg fa-fw"></i>
-      </router-link>
+      <a @click="goBack" :event="fast" v-show="back" class="button">
+        <i class="fa fa-chevron-left fa-bg fa-fw" style="font-size: 0.9em"></i>
+      </a>
 
       <slot></slot>
     </div>
 
     <div class="right">
-      <router-link to="/settings" :event="['mousedown', 'touchstart']"
-                   v-show="settings" class="button" title="Настройки">
+      <router-link :to="{ name: 'settings' }" :event="fast" v-show="settings" class="button">
         <i class="fa fa-cog fa-bg fa-fw"></i>
-      </router-link><router-link to="/sign/out" :event="['mousedown', 'touchstart']"
-                                 v-show="exit" class="button" title="Выход">
-        <i class="fa fa-sign-out fa-bg fa-fw"></i>
       </router-link>
     </div>
 
@@ -25,10 +21,16 @@
 <script>
 export default {
   name: 'navbar',
-  props: {
-    home: { default: false },
-    exit: { default: true },
-    settings: { default: true }
+  props: { },
+  data: () => ({
+    fast: ['mousedown', 'touchstart']
+  }),
+  computed: {
+    back() { return this.$route.name !== 'main' },
+    settings() { return this.$route.name !== 'settings' }
+  },
+  methods: {
+    goBack() { window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/') }
   }
 }
 </script>
