@@ -77,7 +77,7 @@ export default {
     width: 100%;
     position: absolute;
     /*transition: all .5s cubic-bezier(.55,0,.1,1);*/
-    transition: all .5s ease;
+    transition: all .3s ease;
   }
 
   .fade-enter, .fade-leave-active {
@@ -85,7 +85,7 @@ export default {
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s ease;
+    transition: opacity .3s ease;
   }
 
   .slide-left-enter, .slide-right-leave-active {
