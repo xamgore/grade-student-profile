@@ -1,10 +1,11 @@
 {
   "profile": { "name": "Haskell Brooks Curry" },
   "summary": [
-    { "id": 1, "name": "Интеллектуальные системы", "score": 100, "mark": "A" },
-    { "id": 2, "name": "Компьютерная графика", "score": 87, "mark": "B" },
-    { "id": 3, "name": "Функциональное программирование", "score": 13, "mark": "F" },
-    { "id": 4, "name": "БЖД", "score": 75, "mark": "C" },
+    { "id": 1, "name": "Интеллектуальные системы", "score": 100, "mark": "A", "type": "exam" },
+    { "id": 2, "name": "Компьютерная графика", "score": 87, "mark": "B", "type": "exam" },
+    { "id": 3, "name": "Функциональное программирование", "score": 13, "mark": "F", "type": "exam" },
+    { "id": 4, "name": "БЖД (экзамен)", "score": 75, "mark": "C", "type": "exam" },
+    { "id": 4, "name": "БЖД (зачёт)", "score": 75, "mark": "C", "type": "credit" },
     { "id": 5, "name": "Здесь ни у кого нет баллов", "score": "", "mark": "" }
   ],
   "disciplines": [

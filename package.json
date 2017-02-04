@@ -10,7 +10,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "api": "node ./node_modules/json-server/bin/index.js -p 3001 fake-api.json"
+    "api": "node ./node_modules/json-server/bin/index.js -p 3001 fake-api.json --watch"
   },
   "dependencies": {
     "axios": "^0.15.3",

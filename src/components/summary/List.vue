@@ -2,7 +2,7 @@
   <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info">
 
     <template v-if="list.length">
-      <item v-for="d in list" :score="d.score" :mark="d.mark" :id="d.id">
+      <item v-for="d in list" :score="d.score" :mark="d.mark" :type="d.type" :id="d.id">
         {{ d.name }}
       </item>
     </template>

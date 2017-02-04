@@ -1,11 +1,9 @@
 <template>
   <div class="page">
 
-    <opt v-model="val">Упрощённая схема цветов для зачётов</opt>
-    <opt disabled>Здравый смысл у преподавателей</opt>
-    <opt disabled>Повышенная стипендия</opt>
-    <opt>Отключить анимации</opt>
-    <opt disabled>ПМ лучше ИТ</opt>
+    <opt @input="simplifyColors" v-model="sColors">Упрощённая схема цветов для зачётов</opt>
+    <opt @input="changeFontSize" v-model="bigFont">Увеличенные шрифты</opt>
+    <opt disabled>Сделать ПМ лучше ИТ</opt>
 
     <div style="display:flex;justify-content:center; margin-top:2em">
       <button class="exit">
@@ -17,11 +15,23 @@
 
 <script>
 import Opt from './Option'
+import bus from '../../events'
 
 export default {
   name: 'settings',
   components: { Opt },
-  data: () => ({ val: false })
+  data: () => ({
+    bigFont: false,
+    sColors: false
+  }),
+  methods: {
+    changeFontSize: v => bus.$emit('changeFontSize', v),
+    simplifyColors: v => bus.$emit('simplifyColors', v)
+  },
+  created() {
+    this.bigFont = bus.bigFont
+    this.sColors = bus.sColors
+  }
 }
 </script>
 

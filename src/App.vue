@@ -4,7 +4,7 @@
 
     <div id="content">
       <transition :name="direction">
-        <router-view class="child-view"></router-view>
+        <router-view class="child-view" :style="{ 'font-size': bigFont ? '1.1em' : '1em' }"></router-view>
       </transition>
     </div>
   </div>
@@ -12,11 +12,15 @@
 
 <script>
 import Navbar from './components/Navbar'
+import bus from './events'
 
 export default {
   name: 'app',
   components: { Navbar },
   data: () => ({ direction: 'fade' }),
+  computed: {
+    bigFont() { return bus.bigFont }
+  },
   created() {
     this.$router.beforeEach((to, from, next) => {
       const toRight = from.name === 'settings' || from.name === 'dis' && to.name !== 'settings'
