@@ -1,7 +1,7 @@
 <template>
   <div class="item">
-    <router-link :to="{ path: '/dis/' + id, mark }" :event="['mousedown']" class="row">
-      <div :class="['circle', markColor]">{{ score }}</div>
+    <router-link :to="{ path: '/dis/' + id }" :event="['mousedown']" class="row">
+      <div :class="['circle', mark]">{{ score }}</div>
 
       <div class="name"><slot></slot></div>
     </router-link>
@@ -9,22 +9,9 @@
 </template>
 
 <script>
-import bus from '../../events'
-
 export default {
   props: ['score', 'mark', 'id', 'type'],
-  data: () => ({ sColors: false }),
-  name: 'discipline-item',
-  computed: {
-    markColor() {
-      let creditPassed = this.sColors && this.type === 'credit' && this.mark <= 'D'
-      return creditPassed ? 'A' : this.mark
-    }
-  },
-  created() {
-    this.sColors = bus.sColors
-    bus.$on('simplifyColor', val => { this.sColors = val })
-  }
+  name: 'discipline-item'
 }
 </script>
 

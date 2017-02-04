@@ -2,7 +2,7 @@
   <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info">
 
     <template v-if="list.length">
-      <item v-for="d in list" :score="d.score" :mark="d.mark" :type="d.type" :id="d.id">
+      <item v-for="d in list" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">
         {{ d.name }}
       </item>
     </template>
@@ -25,21 +25,50 @@
 <script>
 import Item from './Item'
 import api from '../../api'
+import bus from '../../events'
+
+const computeMark = percent => {
+  if (percent < 0.31) return 'F'
+  if (percent < 0.60) return 'FX'
+  if (percent < 0.65) return 'E'
+  if (percent < 0.71) return 'D'
+  if (percent < 0.85) return 'C'
+  if (percent < 0.95) return 'B'
+  return 'A'
+}
+
+const getECTSMark = (rate, current, examRate) => {
+  if (current <= 0) return ''
+  if (examRate !== undefined && examRate < 22) return 'FX'
+  return computeMark(rate / current)
+}
 
 export default {
   name: 'disciplines-list',
   components: { Item },
   data: () => ({
-    info: null
+    info: null,
+    sColors: false
   }),
   computed: {
     list() {
       const pos = ch => ['A', 'B', 'C', 'D', 'E', 'FX', 'F', ''].indexOf(ch)
-      const byMark = (a, b) => pos(a.mark) - pos(b.mark) || b.score - a.score
-      return this.info.sort(byMark)
+      const byMark = (a, b) => pos(a.mark) - pos(b.mark) || b.rate - a.rate
+      return this.markedList.sort(byMark)
+    },
+    markedList() {
+      const creditPassed = (type, mark) => this.sColors && type === 'credit' && mark <= 'D'
+      return this.info.map(d => {
+        let mark = getECTSMark(d.rate, d.maxRate)
+        d.mark = creditPassed(d.type, mark) ? 'A' : mark
+        return d
+      })
     }
   },
   created() {
+    this.sColors = bus.sColors
+    bus.$on('simplifyColor', val => { this.sColors = val })
+
     api.get(`/summary`)
       .then(res => {
         this.info = res.data
