@@ -33,6 +33,10 @@ export default {
     line-height: 1.1em;
   }
 
+  .item:last-child .row {
+    border-bottom: 0
+  }
+
   .name {
     margin: auto 0;
     font-family: 'PT Sans', sans-serif;

@@ -1,13 +1,7 @@
 <template>
   <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info">
 
-    <template v-if="list.length">
-      <item v-for="d in list" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">
-        {{ d.name }}
-      </item>
-    </template>
-
-    <template v-else>
+    <template v-if="!list.length">
       <div class="notfound"></div>
       <!-- TODO <img src="/static/girlBrown2.png"/> -->
 
@@ -17,6 +11,22 @@
         <br><br>
         Не расстраивайтесь.
       </span>
+    </template>
+
+    <template v-else-if="grItems">
+      <div v-if="exams.length">
+        <div class="disclaimer">Экзамены</div>
+        <item v-for="d in exams" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
+      </div>
+
+      <div v-if="credits.length">
+        <div class="disclaimer credit">Зачёты</div>
+        <item v-for="d in credits" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
+      </div>
+    </template>
+
+    <template v-else>
+      <item v-for="d in list" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
     </template>
 
   </div>
@@ -38,14 +48,17 @@ export default {
     grItems: false
   }),
   computed: {
+    exams() {
+      return this.list.filter(d => d.type === 'exam')
+    },
+    credits() {
+      return this.list.filter(d => d.type !== 'exam')
+    },
     list() {
       const pos = ch => ['A', 'B', 'C', 'D', 'E', 'FX', 'F', ''].indexOf(ch)
-      const clz = t => ['exam', 'grading_credit', 'credit', undefined].indexOf(t)
-      const type = (a, b) => this.grItems ? clz(a.type) - clz(b.type) : 0
-
       const by = {
-        mark: (a, b) => type(a, b) || pos(a.mark) - pos(b.mark) || b.rate - a.rate,
-        name: (a, b) => type(a, b) || a.name.localeCompare(b.name)
+        mark: (a, b) => pos(a.mark) - pos(b.mark) || b.rate - a.rate,
+        name: (a, b) => a.name.localeCompare(b.name)
       }
 
       return this.markedList.sort(by[this.sByName ? 'name' : 'mark'])
@@ -77,8 +90,15 @@ export default {
 </script>
 
 <style scoped>
-  .disciplines {
+  .disclaimer {
+    background-color: #eff0f0;
+    padding: 3px 8px 5px;
+    color: #5a5a5a;
+  }
 
+  .disclaimer.credit {
+    margin-top: 4px;
+    padding: 4px 8px 6px
   }
 
   .message {
