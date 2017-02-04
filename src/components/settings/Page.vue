@@ -2,6 +2,8 @@
   <div class="page">
 
     <opt @input="simplifyColors" v-model="sColors">Упрощённая схема цветов для зачётов</opt>
+    <opt @input="changeSortings" v-model="sByName">Сортировать дисциплины по названию</opt>
+    <opt @input="changeGrouping" v-model="grItems">Разделять экзамены от зачётов</opt>
     <opt @input="changeFontSize" v-model="bigFont">Увеличенные шрифты</opt>
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
@@ -22,15 +24,21 @@ export default {
   components: { Opt },
   data: () => ({
     bigFont: false,
-    sColors: false
+    sColors: false,
+    sByName: false,
+    grItems: false
   }),
   methods: {
     changeFontSize: v => bus.$emit('changeFontSize', v),
-    simplifyColors: v => bus.$emit('simplifyColors', v)
+    simplifyColors: v => bus.$emit('simplifyColors', v),
+    changeSortings: v => bus.$emit('changeSortings', v),
+    changeGrouping: v => bus.$emit('changeGrouping', v)
   },
   created() {
     this.bigFont = bus.bigFont
     this.sColors = bus.sColors
+    this.sByName = bus.sByName
+    this.grItems = bus.grItems
   }
 }
 </script>

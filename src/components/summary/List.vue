@@ -26,35 +26,29 @@
 import Item from './Item'
 import api from '../../api'
 import bus from '../../events'
-
-const computeMark = percent => {
-  if (percent < 0.31) return 'F'
-  if (percent < 0.60) return 'FX'
-  if (percent < 0.65) return 'E'
-  if (percent < 0.71) return 'D'
-  if (percent < 0.85) return 'C'
-  if (percent < 0.95) return 'B'
-  return 'A'
-}
-
-const getECTSMark = (rate, current, examRate) => {
-  if (current <= 0) return ''
-  if (examRate !== undefined && examRate < 22) return 'FX'
-  return computeMark(rate / current)
-}
+import getECTSMark from './marks'
 
 export default {
   name: 'disciplines-list',
   components: { Item },
   data: () => ({
     info: null,
-    sColors: false
+    sColors: false,
+    sByName: false,
+    grItems: false
   }),
   computed: {
     list() {
       const pos = ch => ['A', 'B', 'C', 'D', 'E', 'FX', 'F', ''].indexOf(ch)
-      const byMark = (a, b) => pos(a.mark) - pos(b.mark) || b.rate - a.rate
-      return this.markedList.sort(byMark)
+      const clz = t => ['exam', 'grading_credit', 'credit', undefined].indexOf(t)
+      const type = (a, b) => this.grItems ? clz(a.type) - clz(b.type) : 0
+
+      const by = {
+        mark: (a, b) => type(a, b) || pos(a.mark) - pos(b.mark) || b.rate - a.rate,
+        name: (a, b) => type(a, b) || a.name.localeCompare(b.name)
+      }
+
+      return this.markedList.sort(by[this.sByName ? 'name' : 'mark'])
     },
     markedList() {
       const creditPassed = (type, mark) => this.sColors && type === 'credit' && mark <= 'D'
@@ -67,7 +61,8 @@ export default {
   },
   created() {
     this.sColors = bus.sColors
-    bus.$on('simplifyColor', val => { this.sColors = val })
+    this.sByName = bus.sByName
+    this.grItems = bus.grItems
 
     api.get(`/summary`)
       .then(res => {

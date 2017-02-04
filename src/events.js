@@ -3,7 +3,9 @@ import Vue from 'vue'
 var bus = new Vue({
   data: () => ({
     bigFont: false,
-    sColors: false
+    sColors: false,
+    sByName: false,
+    grItems: false
   }),
   created() {
     var load = () => JSON.parse(window.localStorage.getItem('config'))
@@ -18,6 +20,8 @@ var bus = new Vue({
 
     this.$on('changeFontSize', save('bigFont'))
     this.$on('simplifyColors', save('sColors'))
+    this.$on('changeSortings', save('sByName'))
+    this.$on('changeGrouping', save('grItems'))
   }
 })
 
