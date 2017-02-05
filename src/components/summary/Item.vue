@@ -31,6 +31,7 @@ export default {
     color: #616161;
     font-size: 1.25em;
     line-height: 1.1em;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   }
 
   .item:last-child .row {
