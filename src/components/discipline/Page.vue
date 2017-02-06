@@ -1,26 +1,30 @@
 <template>
-  <div class="page" v-if="name">
+  <div class="page">
+    <template v-if="name">
+      <h2 class="title">{{ name }}</h2>
 
-    <h2 class="title">{{ name }}</h2>
+      <ul>
+        <li v-for="teacher in teachers">
+          <small>{{ teacher }}</small>
+        </li>
+      </ul>
 
-    <ul>
-      <li v-for="teacher in teachers">
-        <small>{{ teacher }}</small>
-      </li>
-    </ul>
+      <module v-for="m in modules" :submodules="m.submodules">
+        {{ m.name }}
+      </module>
 
-    <module v-for="m in modules" :submodules="m.submodules">
-      {{ m.name }}
-    </module>
+      <module v-if="type === 'exam'" :submodules="examModule.submodules">
+        {{ examModule.name }}
+      </module>
 
-    <module v-if="type === 'exam'" :submodules="examModule.submodules">
-      {{ examModule.name }}
-    </module>
+      <module :submodules="[{rate: final, maxRate: 100}]" :threshold="0.6" style="padding: 0">
+        Итоговый рейтинг: {{ final }} / 100
+      </module>
+    </template>
 
-    <module :submodules="[{rate: final, maxRate: 100}]" :threshold="0.6" style="padding: 0">
-      Итоговый рейтинг: {{ final }} / 100
-    </module>
-
+    <div v-else style="color:#455a64;text-align:center;margin-top:100px;overflow:hidden">
+      <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+    </div>
   </div>
 </template>
 
@@ -33,16 +37,11 @@ export default {
   name: 'discipline',
   components: { Module },
   data: () => ({
-    name: null,
-    type: '',
-    teachers: [],
-    extraRate: null,
-    modules: [],
-    exam: {},
-    bonus: null
+    name: null, type: '', teachers: [], extraRate: null, modules: [], exam: {}, bonus: null
   }),
   created() {
     getDisc(this.id).then(data => { Object.assign(this, data) })
+      .catch(err => this.name || window.alert('Ошибка на сервере') || this.$router.go(-1))
 
     let data = window.localStorage.getItem(`dis${this.id}`)
     if (data !== null) Object.assign(this, JSON.parse(data))

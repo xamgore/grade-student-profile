@@ -1,7 +1,17 @@
 <template>
-  <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info">
+  <div :class="['disciplines', !list.length ? 'message' : '']">
 
-    <template v-if="!list.length">
+    <template v-if="!list.length && serverError">
+      <div class="notfound err404"></div>
+      <h1>Сервер недоступен :(</h1>
+      <span>
+        Возможно, он сломался или ведутся технические работы.
+        <br><br>
+        Не расстраивайтесь.
+      </span>
+    </template>
+
+    <template v-else-if="!list.length">
       <div class="notfound"></div>
       <!-- TODO <img src="/static/girlBrown2.png"/> -->
 
@@ -42,7 +52,8 @@ export default {
   name: 'disciplines-list',
   components: { Item },
   data: () => ({
-    info: null,
+    info: [],
+    serverError: false,
     sColors: false,
     sByName: false,
     grItems: false
@@ -78,6 +89,7 @@ export default {
     this.grItems = bus.grItems
 
     getSummary().then(info => { this.info = info })
+      .catch(err => { this.serverError = true })
 
     let data = window.localStorage.getItem(`summary`)
     if (data !== null) this.info = JSON.parse(data)
@@ -128,6 +140,12 @@ export default {
     background: url(/static/notfound.png) no-repeat;
     background-position: 0 -262px;
     image-rendering: pixelated;
+  }
+
+  .notfound.err404 {
+    background-position: 0 -500px;
+    height: 250px;
+    width: 210px
   }
 
 </style>
