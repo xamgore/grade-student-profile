@@ -34,7 +34,7 @@
 
 <script>
 import Item from './Item'
-import api from '../../api'
+import { getSummary } from '../../api'
 import bus from '../../events'
 import getECTSMark from './marks'
 
@@ -77,11 +77,7 @@ export default {
     this.sByName = bus.sByName
     this.grItems = bus.grItems
 
-    api.get(`/summary`)
-      .then(res => {
-        this.info = res.data
-        window.localStorage.setItem(`summary`, JSON.stringify(res.data))
-      })
+    getSummary().then(info => { this.info = info })
 
     let data = window.localStorage.getItem(`summary`)
     if (data !== null) this.info = JSON.parse(data)

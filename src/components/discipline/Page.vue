@@ -26,7 +26,7 @@
 
 <script>
 import Module from './Module'
-import api from '../../api'
+import { getDisc } from '../../api'
 
 export default {
   props: ['id'],
@@ -42,12 +42,7 @@ export default {
     bonus: null
   }),
   created() {
-    api.get(`/disciplines/${this.id}`)
-      .then(res => {
-        delete res.data.id
-        Object.assign(this, res.data)
-        window.localStorage.setItem(`dis${this.id}`, JSON.stringify(res.data))
-      })
+    getDisc(this.id).then(data => { Object.assign(this, data) })
 
     let data = window.localStorage.getItem(`dis${this.id}`)
     if (data !== null) Object.assign(this, JSON.parse(data))
