@@ -94,6 +94,7 @@ export default {
 
   #content {
     position: relative;
+    flex-grow: 1;
   }
 
   a {
