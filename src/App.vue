@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @touchstart="start" @touchmove="move">
     <navbar></navbar>
 
     <div id="content">
@@ -14,6 +14,8 @@
 import Navbar from './components/Navbar'
 import bus from './events'
 
+let startX, startY, startTime
+
 export default {
   name: 'app',
   components: { Navbar },
@@ -27,6 +29,28 @@ export default {
       this.direction = toRight ? 'slide-right' : 'slide-left'
       next()
     })
+  },
+  methods: {
+    start(e) {
+      const touch = e.changedTouches[0]
+      startX = touch.pageX
+      startY = touch.pageY
+      startTime = new Date().getTime()
+    },
+    move(e) {
+      const touch = e.changedTouches[0]
+      const dist = touch.pageX - startX
+      const elapsed = new Date().getTime() - startTime
+      const swiperightBol = ((dist / elapsed >= 0.5) && Math.abs(touch.pageY - startY) <= 150)
+
+      if (!swiperightBol) return
+
+      if (this.$route.name === 'settings' && window.history.length > 2) {
+        return this.$router.go(-1)
+      }
+
+      this.$router.push('/')
+    }
   }
 }
 </script>
