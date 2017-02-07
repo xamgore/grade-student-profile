@@ -6,6 +6,10 @@ import MainPage from './components/summary/List'
 import Settings from './components/settings/Page'
 import Discipline from './components/discipline/Page'
 
+if (process.env.NODE_ENV === 'production') {
+  require('offline-plugin/runtime').install()
+}
+
 Vue.use(Router)
 
 const router = new Router({
