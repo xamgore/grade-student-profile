@@ -29,6 +29,11 @@
         <item v-for="d in exams" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
       </div>
 
+      <div v-if="gr_credits.length">
+        <div class="disclaimer credit">Диф. зачёты</div>
+        <item v-for="d in gr_credits" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
+      </div>
+
       <div v-if="credits.length">
         <div class="disclaimer credit">Зачёты</div>
         <item v-for="d in credits" :score="d.rate" :mark="d.mark" :type="d.type" :id="d.id">{{ d.name }}</item>
@@ -62,8 +67,11 @@ export default {
     exams() {
       return this.list.filter(d => d.type === 'exam')
     },
+    gr_credits() {
+      return this.list.filter(d => d.type === 'grading_credit')
+    },
     credits() {
-      return this.list.filter(d => d.type !== 'exam')
+      return this.list.filter(d => d.type !== 'exam' && d.type !== 'grading_credit')
     },
     list() {
       const pos = ch => ['A', 'B', 'C', 'D', 'E', 'FX', 'F', ''].indexOf(ch)
