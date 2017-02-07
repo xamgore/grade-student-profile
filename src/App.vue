@@ -14,7 +14,7 @@
 import Navbar from './components/Navbar'
 import bus from './events'
 
-let startX, startY, startTime
+let lastX, lastY, lastTime
 
 export default {
   name: 'app',
@@ -33,17 +33,29 @@ export default {
   methods: {
     start(e) {
       const touch = e.changedTouches[0]
-      startX = touch.pageX
-      startY = touch.pageY
-      startTime = new Date().getTime()
+      lastX = touch.pageX
+      lastY = touch.pageY
+      lastTime = new Date().getTime()
     },
     move(e) {
       const touch = e.changedTouches[0]
-      const dist = touch.pageX - startX
-      const elapsed = new Date().getTime() - startTime
-      const swiperightBol = ((dist / elapsed >= 0.5) && Math.abs(touch.pageY - startY) <= 150)
+      const dx = touch.pageX - lastX
+      const dy = touch.pageY - lastY
 
-      if (!swiperightBol) return
+      const now = new Date().getTime()
+      const time = now - lastTime
+      const velocityX = Math.abs(dx) / time
+
+      const correctAngle = Math.abs(dx) / Math.abs(dy) > 2
+      const enoughPower = velocityX >= 0.6
+      const enoughDistance = dx >= 15
+
+      lastX = touch.pageX
+      lastY = touch.pageY
+      lastTime = now
+
+      const swiperight = correctAngle && enoughPower && enoughDistance
+      if (!swiperight) return
 
       if (this.$route.name === 'settings' && window.history.length > 2) {
         return this.$router.go(-1)
