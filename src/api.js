@@ -1,9 +1,19 @@
 import axios from 'axios'
 
-const api = axios.create({
-  baseURL: `${window.location.protocol}//${window.location.hostname}:3001/`,
-  timeout: 3000
-})
+let api
+
+if (process.env.NODE_ENV === 'production') {
+  api = axios.create({
+    params: { token: document.cookie.match(/token=([^;]+)/) },
+    baseURL: `/api/v2017/student/`,
+    timeout: 5000
+  })
+} else {
+  api = axios.create({
+    baseURL: `${window.location.protocol}//${window.location.hostname}:3001/`,
+    timeout: 3000
+  })
+}
 
 const getDisc = id =>
   api.get(`/disciplines/${id}`)
