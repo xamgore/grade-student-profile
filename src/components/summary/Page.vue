@@ -1,7 +1,7 @@
 <template>
-  <div :class="['disciplines', !list.length ? 'message' : '']">
+  <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info.length || serverAnswered">
 
-    <template v-if="!list.length && serverError">
+    <template v-if="!info.length && serverError">
       <div class="notfound err404"></div>
       <h1>Сервер недоступен :(</h1>
       <span>
@@ -11,7 +11,7 @@
       </span>
     </template>
 
-    <template v-else-if="!list.length">
+    <template v-else-if="!info.length && serverAnswered">
       <div class="notfound"></div>
       <!-- TODO <img src="/static/girlBrown2.png"/> -->
 
@@ -59,6 +59,7 @@ export default {
   data: () => ({
     info: [],
     serverError: false,
+    serverAnswered: false,
     sColors: false,
     sByName: false,
     grItems: false
@@ -98,6 +99,7 @@ export default {
 
     getSummary().then(info => { this.info = info })
       .catch(err => { this.serverError = true })
+      .then(() => { this.serverAnswered = true })
 
     let data = window.localStorage.getItem(`summary`)
     if (data !== null) this.info = JSON.parse(data)
