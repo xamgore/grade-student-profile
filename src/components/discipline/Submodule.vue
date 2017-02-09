@@ -33,10 +33,10 @@ export default {
     shortDate(d) {
       if (!d) return ''
 
-      let [day, mon] = d.split('.').slice(0, 2)
+      let [mon, day] = d.split('-').slice(1, 3)
       let short = ['янв', 'февр', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сент', 'окт', 'нояб', 'дек']
 
-      return `${day} ${short[mon - 1]}`
+      return `${day.replace(/^0/, '')} ${short[mon - 1]}`
     }
   }
 }

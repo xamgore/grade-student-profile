@@ -9,7 +9,7 @@
         </li>
       </ul>
 
-      <module v-for="m in modules" :submodules="m.submodules">
+      <module v-for="m in regular" :submodules="m.submodules">
         {{ m.name }}
       </module>
 
@@ -17,8 +17,8 @@
         {{ examModule.name }}
       </module>
 
-      <module :submodules="[{rate: final, maxRate: 100}]" :threshold="0.6" style="padding: 0">
-        Итоговый рейтинг: {{ final }} / 100
+      <module :submodules="[{rate: finalRate, maxRate: 100}]" :threshold="0.6" style="padding: 0">
+        Итоговый рейтинг: {{ finalRate }} / 100
       </module>
     </template>
 
@@ -37,7 +37,7 @@ export default {
   name: 'discipline',
   components: { Module },
   data: () => ({
-    name: null, type: '', teachers: [], extraRate: null, modules: [], exam: {}, bonus: null
+    name: null, type: '', teachers: [], modules: []
   }),
   created() {
     getDisc(this.id).then(data => { Object.assign(this, data) })
@@ -46,30 +46,43 @@ export default {
     let data = window.localStorage.getItem(`dis${this.id}`)
     if (data !== null) Object.assign(this, JSON.parse(data))
   },
+  methods: {
+    getModule(type) {
+      let m = this.modules.filter(m => m.type === type)[0]
+      return m && m.submodules[0] || {}
+    }
+  },
   computed: {
-    total() {
+    exam() {
+      return Object.assign(this.getModule('exam'), { name: 'Экзамен по курсу' })
+    },
+
+    bonus() {
+      return Object.assign(this.getModule('bonus'), { name: 'Бонусные баллы' })
+    },
+
+    extra() {
+      return Object.assign(this.getModule('extra'), { name: 'Добор баллов', maxRate: 0 })
+    },
+
+    regular() {
+      return this.modules.filter(m => m.type === 'regular') || 0
+    },
+
+    regularRate() {
       let sum = 0
-      this.modules.forEach(m => m.submodules.forEach(s => { sum += s.rate || 0 }))
+      this.regular.forEach(m => m.submodules.forEach(s => { sum += s.rate || 0 }))
       return sum
     },
 
-    final() {
-      return (this.exam && this.exam.rate || 0) +
-             (this.bonus && this.bonus.rate || 0) + this.total
+    finalRate() {
+      return (this.exam.rate || 0) + (this.bonus.rate || 0) + (this.extra.rate || 0) + this.regularRate
     },
 
     examModule() {
-      let subs = []
-
-      if (this.extraRate) {
-        subs.push(Object.assign({ name: 'Добор баллов' }, { rate: this.extraRate, maxRate: 0 }))
-      }
-
-      subs.push(Object.assign({ name: 'Экзамен по курсу' }, this.exam))
-      subs.push(Object.assign({ name: 'Бонусные баллы' }, this.bonus))
-
-      let tip = this.total + (this.extraRate || 0) < 38 ? '(допуска нет)' : ''
-      return { name: `Экзамен ${tip}`, submodules: subs }
+      let noextra = this.extra.rate === null
+      let tip = this.regularRate + (this.extra.rate || 0) < 38 ? '(допуска нет)' : ''
+      return { name: `Экзамен ${tip}`, submodules: [this.extra, this.exam, this.bonus].slice(noextra, 3) }
     }
   }
 }
