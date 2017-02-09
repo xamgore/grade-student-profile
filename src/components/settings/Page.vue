@@ -8,9 +8,7 @@
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
     <div style="display:flex;justify-content:center; margin-top:2em">
-      <button class="exit">
-        Выйти из аккаунта
-      </button>
+      <button class="exit" @click="exit">Выйти из аккаунта</button>
     </div>
   </div>
 </template>
@@ -32,7 +30,8 @@ export default {
     changeFontSize: v => bus.$emit('changeFontSize', v),
     simplifyColors: v => bus.$emit('simplifyColors', v),
     changeSortings: v => bus.$emit('changeSortings', v),
-    changeGrouping: v => bus.$emit('changeGrouping', v)
+    changeGrouping: v => bus.$emit('changeGrouping', v),
+    exit() { window.localStorage.clear() || this.$router.replace('/') }
   },
   created() {
     this.bigFont = bus.bigFont
