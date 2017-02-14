@@ -1,6 +1,9 @@
 <template>
   <div class="module">
-    <h3 class="strip" :class="{ warning: moduleIsBad }"><slot></slot></h3>
+    <div class="strip" :class="{ warning: moduleIsBad }">
+      <h3 class="name"><slot></slot></h3>
+      <span v-if="showRate" class="rate">{{ studentRate }} / {{ maxPossibleRate }}</span>
+    </div>
 
     <submodule v-for="s in submodules" :s="s" />
   </div>
@@ -13,15 +16,24 @@ export default {
   name: 'module',
   components: { Submodule },
   props: {
+    'showRate': { default: false },
     'threshold': { default: 0.5 },
     'submodules': { type: Array, default: () => [] }
   },
   computed: {
     moduleIsBad() { return !this.submodules.length || this.progress < this.threshold },
-    progress() {
+
+    score() {
       const sum = ([maxRate, rate], s) => [maxRate + s.maxRate || 0, rate + s.rate || 0]
-      const [total, student] = this.submodules.reduce(sum, [0, 0])
-      return student / (total || 1)
+      return this.submodules.reduce(sum, [0, 0])
+    },
+
+    studentRate() { return this.score[1] },
+
+    maxPossibleRate() { return this.score[0] },
+
+    progress() {
+      return this.studentRate / (this.maxPossibleRate || 1)
     }
   }
 }
@@ -35,14 +47,14 @@ export default {
   }
 
   .strip {
-    font-weight: 400;
-    line-height: 1.2em;
     margin: 0;
     margin-bottom: 6px;
     padding: 10px;
     background-color: rgba(3, 169, 244, 0.14);
     background-color: rgba(8, 175, 21, 0.14);
     transition: background 0.5s ease-in;
+    display: flex;
+    align-items: center;
   }
 
   .strip.danger {
@@ -51,5 +63,24 @@ export default {
 
   .strip.warning {
     background-color: rgba(242, 179, 2, 0.2);
+  }
+
+  .strip .name {
+    font-weight: 400;
+    line-height: 1.2em;
+    padding: 0;
+    margin: 0;
+    margin-right: auto;
+    align-self: center;
+  }
+
+  .strip .rate {
+    color: #787878;
+    font-size: 0.66em;
+    line-height: 1.22em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: bold;
+    padding-left: 0.5em;
   }
 </style>

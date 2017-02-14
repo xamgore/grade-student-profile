@@ -5,7 +5,8 @@ var bus = new Vue({
     bigFont: false,
     sColors: false,
     sByName: false,
-    grItems: false
+    grItems: false,
+    mRating: false
   }),
   created() {
     var load = () => JSON.parse(window.localStorage.getItem('config'))
@@ -22,6 +23,7 @@ var bus = new Vue({
     this.$on('simplifyColors', save('sColors'))
     this.$on('changeSortings', save('sByName'))
     this.$on('changeGrouping', save('grItems'))
+    this.$on('showModuleRate', save('mRating'))
   }
 })
 

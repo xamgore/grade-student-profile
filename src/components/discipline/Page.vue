@@ -9,7 +9,7 @@
         </li>
       </ul>
 
-      <module v-for="m in regular" :submodules="m.submodules">
+      <module v-for="m in regular" :submodules="m.submodules" :showRate="mRating">
         {{ m.name }}
       </module>
 
@@ -31,6 +31,7 @@
 <script>
 import Module from './Module'
 import { getDisc } from '../../api'
+import bus from '../../events'
 
 export default {
   props: ['id'],
@@ -40,6 +41,8 @@ export default {
     name: null, type: '', teachers: [], modules: []
   }),
   created() {
+    this.mRating = bus.mRating
+
     getDisc(this.id).then(data => { Object.assign(this, data) })
       .catch(err => this.name || window.alert('Ошибка на сервере') || this.$router.go(-1))
 

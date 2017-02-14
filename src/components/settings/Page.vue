@@ -4,6 +4,7 @@
     <opt @input="simplifyColors" v-model="sColors">Упрощённая схема цветов для зачётов</opt>
     <opt @input="changeSortings" v-model="sByName">Сортировать дисциплины по названию</opt>
     <opt @input="changeGrouping" v-model="grItems">Разделять экзамены от зачётов</opt>
+    <opt @input="showModuleRate" v-model="mRating">Подсчитывать баллы в модуле</opt>
     <opt @input="changeFontSize" v-model="bigFont">Увеличенные шрифты</opt>
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
@@ -31,6 +32,7 @@ export default {
     simplifyColors: v => bus.$emit('simplifyColors', v),
     changeSortings: v => bus.$emit('changeSortings', v),
     changeGrouping: v => bus.$emit('changeGrouping', v),
+    showModuleRate: v => bus.$emit('showModuleRate', v),
     exit() { window.localStorage.clear() || this.$router.replace('/') }
   },
   created() {
@@ -38,6 +40,7 @@ export default {
     this.sColors = bus.sColors
     this.sByName = bus.sByName
     this.grItems = bus.grItems
+    this.mRating = bus.mRating
   }
 }
 </script>
