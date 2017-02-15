@@ -13,7 +13,7 @@
         {{ m.name }}
       </module>
 
-      <module v-if="type === 'exam'" :submodules="examModule.submodules">
+      <module v-if="type === 'exam'" :submodules="examModule.submodules" :threshold="examThreshold">
         {{ examModule.name }}
       </module>
 
@@ -86,6 +86,10 @@ export default {
       let noextra = this.extra.rate === null
       let tip = this.regularRate + (this.extra.rate || 0) < 38 ? '(допуска нет)' : ''
       return { name: `Экзамен ${tip}`, submodules: [this.extra, this.exam, this.bonus].slice(noextra, 3) }
+    },
+
+    examThreshold() {
+      return (22 + (this.bonus.rate || 0)) / (40 + this.bonus.maxRate || 0)
     }
   }
 }
