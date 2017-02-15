@@ -9,8 +9,10 @@ In our university we develop a system for teachers & students, that allows both 
 
 ``` bash
 npm install
-npm run api   # run mock api server and
-npm run dev   # run dev server at 0.0.0.0:3000
+npm run me     # run mock api server and
+               # dev server at 0.0.0.0:3000
+
+npm run build  # if you wanna get a production ready distro
 ```
 
 ## Tests
