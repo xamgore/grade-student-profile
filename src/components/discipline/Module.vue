@@ -51,7 +51,7 @@ export default {
     margin-bottom: 6px;
     padding: 10px;
     background-color: rgba(3, 169, 244, 0.14);
-    background-color: rgba(8, 175, 21, 0.14);
+    background-color: rgba(0, 195, 15, 0.14);
     transition: background 0.5s ease-in;
     display: flex;
     align-items: center;
@@ -75,12 +75,15 @@ export default {
   }
 
   .strip .rate {
-    color: #787878;
+    color: #626262;
     font-size: 0.66em;
     line-height: 1.22em;
     white-space: nowrap;
     flex-shrink: 0;
     font-weight: bold;
-    padding-left: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.3em;
+    border-radius: 4px;
+    background-color: white;
   }
 </style>
