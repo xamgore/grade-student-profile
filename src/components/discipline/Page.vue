@@ -22,8 +22,9 @@
       </module>
     </template>
 
-    <div v-else style="color:#455a64;text-align:center;margin-top:100px;overflow:hidden">
-      <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+    <div v-else style="text-align:center;margin-top:100px;overflow:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 28">
+        <path d="M23.6 16.5c0 0 0 0.1 0 0.1-1.3 5.5-5.9 9.4-11.7 9.4-3 0-6-1.2-8.2-3.3l-2 2c-0.2 0.2-0.4 0.3-0.7 0.3-0.5 0-1-0.5-1-1v-7c0-0.5 0.5-1 1-1h7c0.5 0 1 0.5 1 1 0 0.3-0.1 0.5-0.3 0.7l-2.1 2.1c1.5 1.4 3.4 2.2 5.4 2.2 2.8 0 5.4-1.4 6.8-3.8 0.4-0.6 0.6-1.2 0.8-1.8 0.1-0.2 0.2-0.4 0.5-0.4h3c0.3 0 0.5 0.2 0.5 0.5zM24 4v7c0 0.5-0.5 1-1 1h-7c-0.5 0-1-0.5-1-1 0-0.3 0.1-0.5 0.3-0.7l2.2-2.2c-1.5-1.4-3.4-2.1-5.5-2.1-2.8 0-5.4 1.4-6.8 3.8-0.4 0.6-0.6 1.2-0.8 1.8-0.1 0.2-0.2 0.4-0.5 0.4h-3.1c-0.3 0-0.5-0.2-0.5-0.5v-0.1c1.3-5.5 6-9.4 11.7-9.4 3.1 0 6 1.2 8.3 3.3l2-2c0.2-0.2 0.4-0.3 0.7-0.3 0.5 0 1 0.5 1 1z"/></svg>
     </div>
   </div>
 </template>
@@ -96,6 +97,18 @@ export default {
 </script>
 
 <style scoped>
+  .icon {
+    animation: spin 2s infinite linear;
+    fill: #455a64;
+    width: auto;
+    height: 3em;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(359deg) }
+  }
+
   .strip {
     font-weight: 400;
     line-height: 1.2em;
