@@ -4,7 +4,7 @@
 
     <div id="content" class="wall">
       <transition :name="direction">
-        <router-view class="child-view" :style="{ 'font-size': bigFont ? '1.1em' : '1em' }"></router-view>
+        <router-view class="child-view"></router-view>
       </transition>
     </div>
   </div>
@@ -12,7 +12,6 @@
 
 <script>
 import Navbar from './components/Navbar'
-import bus from './events'
 
 let lastX, lastY, lastTime
 
@@ -20,9 +19,6 @@ export default {
   name: 'app',
   components: { Navbar },
   data: () => ({ direction: 'fade' }),
-  computed: {
-    bigFont() { return bus.bigFont }
-  },
   created() {
     this.$router.beforeEach((to, from, next) => {
       const toRight = from.name === 'settings' || from.name === 'dis' && to.name !== 'settings'

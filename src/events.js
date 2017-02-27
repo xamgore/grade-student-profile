@@ -2,7 +2,6 @@ import Vue from 'vue'
 
 var bus = new Vue({
   data: () => ({
-    bigFont: false,
     sColors: false,
     sByName: false,
     grItems: false,
@@ -19,7 +18,6 @@ var bus = new Vue({
 
     Object.assign(this, load() || [])
 
-    this.$on('changeFontSize', save('bigFont'))
     this.$on('simplifyColors', save('sColors'))
     this.$on('changeSortings', save('sByName'))
     this.$on('changeGrouping', save('grItems'))

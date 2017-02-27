@@ -5,7 +5,6 @@
     <opt @input="changeSortings" v-model="sByName">Сортировать дисциплины по названию</opt>
     <opt @input="changeGrouping" v-model="grItems">Разделять экзамены от зачётов</opt>
     <opt @input="showModuleRate" v-model="mRating">Подсчитывать баллы в модуле</opt>
-    <opt @input="changeFontSize" v-model="bigFont">Увеличенные шрифты</opt>
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
     <div style="display:flex;justify-content:center; margin:2em 0">
