@@ -21,8 +21,13 @@ export default {
   data: () => ({ direction: 'fade' }),
   created() {
     this.$router.beforeEach((to, from, next) => {
-      const toRight = from.name === 'settings' || from.name === 'dis' && to.name !== 'settings'
-      this.direction = toRight ? 'slide-right' : 'slide-left'
+      const goBack = [
+        from.name === 'dis' && to.name !== 'settings',
+        from.name === 'settings' && to.name !== 'help',
+        from.name === 'help'
+      ].some(Boolean)
+
+      this.direction = goBack ? 'slide-right' : 'slide-left'
       next()
     })
   },
