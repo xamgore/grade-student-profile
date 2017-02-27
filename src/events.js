@@ -2,9 +2,9 @@ import Vue from 'vue'
 
 var bus = new Vue({
   data: () => ({
-    sColors: false,
+    sColors: true,
     sByName: false,
-    grItems: false,
+    grItems: true,
     mRating: false
   }),
   created() {
