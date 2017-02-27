@@ -2,7 +2,7 @@
   <div id="app">
     <navbar></navbar>
 
-    <div id="content">
+    <div id="content" class="wall">
       <transition :name="direction">
         <router-view class="child-view" :style="{ 'font-size': bigFont ? '1.1em' : '1em' }"></router-view>
       </transition>
@@ -76,12 +76,15 @@ export default {
     height: 100%;
   }
 
-  @media screen and (min-device-width: 480px) {
-    html, body {
-      max-width: 480px;
-      margin: auto;
-    }
+  .wall {
+    margin: 0 auto;
+    width: 100%;
   }
+
+  @media screen and (min-width: 560px) {
+    .wall { max-width: 560px }
+  }
+
 
   html {
     box-sizing: border-box;

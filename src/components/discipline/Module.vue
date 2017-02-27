@@ -72,12 +72,13 @@ export default {
     margin: 0;
     margin-right: auto;
     align-self: center;
+    color: #222;
   }
 
   .strip .rate {
     color: #626262;
-    font-size: 0.66em;
-    line-height: 1.22em;
+    font-size: 0.76em;
+    line-height: 1.12em;
     white-space: nowrap;
     flex-shrink: 0;
     font-weight: bold;

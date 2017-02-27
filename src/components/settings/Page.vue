@@ -8,7 +8,7 @@
     <opt @input="changeFontSize" v-model="bigFont">Увеличенные шрифты</opt>
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
-    <div style="display:flex;justify-content:center; margin-top:2em">
+    <div style="display:flex;justify-content:center; margin:2em 0">
       <button class="exit" @click="exit">Выйти из аккаунта</button>
     </div>
   </div>

@@ -139,6 +139,6 @@ export default {
   }
 
   .page li {
-    padding-bottom: 5px;
+    padding-bottom: 3px;
   }
 </style>
