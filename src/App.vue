@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @touchstart="start" @touchmove="move">
+  <div id="app">
     <navbar></navbar>
 
     <div id="content">
