@@ -2,7 +2,8 @@
   <div :class="['disciplines', !list.length ? 'message' : '']" v-if="info.length || serverAnswered">
 
     <template v-if="!info.length && serverError">
-      <div class="notfound err404"></div>
+      <img src="~assets/404.png" class="errorImage" alt=""/>
+
       <h1>Сервер недоступен :(</h1>
       <span>
         Возможно, он сломался или ведутся технические работы.
@@ -12,8 +13,7 @@
     </template>
 
     <template v-else-if="!info.length && serverAnswered">
-      <div class="notfound"></div>
-      <!-- TODO <img src="/static/girlBrown2.png"/> -->
+      <img src="~assets/nosummary.png" class="errorImage" alt=""/>
 
       <h1>Курсов нет :(</h1>
       <span>
@@ -144,18 +144,8 @@ export default {
     width: 18em;
   }
 
-  .notfound {
-    width: 244px;
-    height: 238px;
-    background: url(/static/notfound.png) no-repeat;
-    background-position: 0 -262px;
+  .errorImage {
     image-rendering: pixelated;
-  }
-
-  .notfound.err404 {
-    background-position: 0 -500px;
-    height: 250px;
-    width: 210px
   }
 
 </style>
