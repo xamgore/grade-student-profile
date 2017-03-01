@@ -1,5 +1,5 @@
 const computeMark = percent => {
-  if (percent < 0.31) return 'F'
+  if (percent < 0.38) return 'F'
   if (percent < 0.60) return 'FX'
   if (percent < 0.65) return 'E'
   if (percent < 0.71) return 'D'
