@@ -3,6 +3,7 @@ import App from './App'
 import Router from 'vue-router'
 
 import Help from './components/help/Page'
+import Support from './components/support/Page'
 import MainPage from './components/summary/Page'
 import Settings from './components/settings/Page'
 import Discipline from './components/discipline/Page'
@@ -19,6 +20,7 @@ const router = new Router({
   routes: [
     { name: 'dis', path: '/dis/:id(\\d+)', component: Discipline, props: true },
     { name: 'settings', path: '/settings', component: Settings },
+    { name: 'support', path: '/support', component: Support },
     { name: 'help', path: '/help', component: Help },
     { name: 'main', path: '/', component: MainPage },
     { path: '*', redirect: { name: 'main' } }

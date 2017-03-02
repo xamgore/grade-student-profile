@@ -7,8 +7,12 @@
     <opt @input="showModuleRate" v-model="mRating">Подсчитывать баллы в модуле</opt>
     <opt disabled>Сделать ПМ лучше ИТ</opt>
 
-    <div style="display:flex;justify-content:center; margin:2em 0">
-      <button class="exit" @click="exit">Выйти из аккаунта</button>
+    <div style="margin:2em 0">
+      <router-link to="/support" tag="button" class="blue" @click.native="exit">
+        Выйти из аккаунта</router-link>
+
+      <router-link to="/support" tag="button" class="gray">
+        Написать в поддержку</router-link>
     </div>
   </div>
 </template>
@@ -32,7 +36,7 @@ export default {
     changeSortings: v => bus.$emit('changeSortings', v),
     changeGrouping: v => bus.$emit('changeGrouping', v),
     showModuleRate: v => bus.$emit('showModuleRate', v),
-    exit() { window.localStorage.clear() || this.$router.replace('/') }
+    exit() { window.localStorage.clear() }
   },
   created() {
     this.bigFont = bus.bigFont
@@ -49,18 +53,29 @@ export default {
     padding: 10px;
   }
 
-  .exit {
+  button {
     display: block;
     padding: 0.5em 1em;
     outline: none;
     border: 0;
     border-radius: 0.3em;
-    background-color: #2196F3;
     color: white;
     font: inherit;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
   }
 
-  .exit:focus, .exit:active {
+  .blue {
+    background-color: #2196F3;
+  }
+
+  .blue:focus, .blue:active {
     background-color: #0c85e9;
+  }
+
+  .gray {
+    background-color: #ccc;
   }
 </style>

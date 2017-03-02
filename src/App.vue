@@ -23,7 +23,8 @@ export default {
     this.$router.beforeEach((to, from, next) => {
       const goBack = [
         from.name === 'dis' && to.name !== 'settings',
-        from.name === 'settings' && to.name !== 'help',
+        from.name === 'settings' && to.name !== 'help' && to.name !== 'support',
+        from.name === 'support' && to.name !== 'help',
         from.name === 'help'
       ].some(Boolean)
 

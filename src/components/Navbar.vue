@@ -35,8 +35,8 @@ export default {
   }),
   computed: {
     back() { return this.$route.name !== 'main' },
-    help() { return this.$route.name === 'settings' },
-    settings() { return this.$route.name !== 'settings' && this.$route.name !== 'help' }
+    help() { return ['settings', 'support'].indexOf(this.$route.name) >= 0 },
+    settings() { return ['main', 'dis'].indexOf(this.$route.name) >= 0 }
   },
   methods: {
     goBack() { window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/') }
