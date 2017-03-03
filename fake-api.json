@@ -1,4 +1,5 @@
 {
+  "support": [],
   "summary": [
       { "id": 24, "name": "Математическая логика", "type": "exam", "rate": 37, "maxRate": 100 },
       { "id": 270, "name": "Математические основы защиты информации", "type": "exam", "rate": 70, "maxRate": 100 },

@@ -36,4 +36,7 @@ const getSummary = () =>
       return res.data
     })
 
-export { api, getDisc, getSummary }
+const sendIssue = (msg) =>
+  api.post(`/support`, { message: msg })
+
+export { api, getDisc, getSummary, sendIssue }
