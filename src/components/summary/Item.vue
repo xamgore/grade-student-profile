@@ -31,7 +31,7 @@ export default {
   .row {
     display: flex;
     padding: 8px 0;
-    border-bottom: 1.5px solid #eee;
+    border-bottom: 1.5px solid rgba(238, 238, 238, 0.75);
     color: #616161;
     font-size: 1.25em;
     line-height: 1.1em;

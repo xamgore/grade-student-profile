@@ -96,7 +96,7 @@ export default {
     margin: 0;
     padding: 0;
     font-family: PT Sans,sans-serif;
-    background-color: rgba(231, 231, 231, 0.29);
+    background-color: rgba(231, 231, 231, 0.2);
   }
 
   #app, #content {
