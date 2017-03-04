@@ -7,6 +7,8 @@
               <path d="M18.3 4.7l-8.3 8.3 8.3 8.3c0.4 0.4 0.4 1 0 1.4l-2.6 2.6c-0.4 0.4-1 0.4-1.4 0l-11.6-11.6c-0.4-0.4-0.4-1 0-1.4l11.6-11.6c0.4-0.4 1-0.4 1.4 0l2.6 2.6c0.4 0.4 0.4 1 0 1.4z"/></svg>
           </a>
 
+          <span v-show="semester" class="semester">{{ month }} {{ year }}</span>
+
           <slot></slot>
         </div>
 
@@ -36,7 +38,14 @@ export default {
   computed: {
     back() { return this.$route.name !== 'main' },
     help() { return ['settings', 'support'].indexOf(this.$route.name) >= 0 },
-    settings() { return ['main', 'dis'].indexOf(this.$route.name) >= 0 }
+    settings() { return ['main', 'dis'].indexOf(this.$route.name) >= 0 },
+    semester() { return this.$route.name === 'main' },
+
+    month() {
+      let month = new Date().getMonth() + 1
+      return (month === 1 || month >= 9) ? 'Осень' : 'Весна'
+    },
+    year() { return new Date().getFullYear().toString().slice(2) }
   },
   methods: {
     goBack() { window.history.length > 2 ? this.$router.go(-1) : this.$router.push('/') }
@@ -45,6 +54,12 @@ export default {
 </script>
 
 <style scoped>
+  .semester {
+    font-size: 0.8em;
+    vertical-align: 10%;
+    font-variant: small-caps;
+  }
+
   .icon {
     width: auto;
     height: 1.1em;
