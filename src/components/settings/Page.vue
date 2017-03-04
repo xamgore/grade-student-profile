@@ -5,7 +5,7 @@
     <opt @input="changeSortings" v-model="sByName">Сортировать дисциплины по названию</opt>
     <opt @input="changeGrouping" v-model="grItems">Разделять экзамены от зачётов</opt>
     <opt @input="showModuleRate" v-model="mRating">Подсчитывать баллы в модуле</opt>
-    <opt disabled>Сделать ПМ лучше ИТ</opt>
+    <opt disabled v-show="flipCoin">Сделать ПМ лучше ИТ</opt>
 
     <div style="margin:2em 0">
       <router-link to="/support" tag="button" class="blue" @click.native="exit">
@@ -28,7 +28,8 @@ export default {
     bigFont: false,
     sColors: false,
     sByName: false,
-    grItems: false
+    grItems: false,
+    flipCoin: Math.random().toString().slice(2) % 5 === 0
   }),
   methods: {
     changeFontSize: v => bus.$emit('changeFontSize', v),
