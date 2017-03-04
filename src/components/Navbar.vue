@@ -3,7 +3,7 @@
       <nav class="wall">
         <div>
           <a @click="goBack" :event="fast" v-show="back" class="button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 21 28">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon back" viewBox="0 0 21 28">
               <path d="M18.3 4.7l-8.3 8.3 8.3 8.3c0.4 0.4 0.4 1 0 1.4l-2.6 2.6c-0.4 0.4-1 0.4-1.4 0l-11.6-11.6c-0.4-0.4-0.4-1 0-1.4l11.6-11.6c0.4-0.4 1-0.4 1.4 0l2.6 2.6c0.4 0.4 0.4 1 0 1.4z"/></svg>
           </a>
 
@@ -52,6 +52,8 @@ export default {
     fill: currentColor;
   }
 
+  .icon.back { vertical-align: -15% }
+
   header {
     background: #777;
     box-shadow: 0 5px 5px #e1e2e2;
@@ -59,17 +61,13 @@ export default {
   }
 
   nav {
-    height: 52px;
+    padding: 0.35em 0.6em;
     color: hsla(180, 2%, 100%, 1);
     vertical-align: middle;
     font-size: 1.5rem;
-    line-height: 52px;
     overflow: hidden;
     display: flex;
-  }
-
-  .button {
-    padding: 0 0.7em;
+    align-items: center;
   }
 
   .right > * {
