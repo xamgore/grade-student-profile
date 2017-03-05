@@ -14,9 +14,7 @@ export default {
 </script>
 
 <style scoped>
-  .switch input {
-    display: none
-  }
+  .switch input { display: none }
 
   .switch {
     position: relative;

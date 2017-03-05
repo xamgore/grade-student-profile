@@ -82,13 +82,9 @@ export default {
 </script>
 
 <style scoped>
-  p {
-    margin-top: 0.3em
-  }
+  p { margin-top: 0.3em }
 
-  h4 {
-    margin-bottom: 0
-  }
+  h4 { margin-bottom: 0 }
 
   .circles {
     display: flex;
@@ -110,9 +106,7 @@ export default {
     font-size: 0.9em;
   }
 
-  a {
-    color: #2196f3;
-  }
+  a { color: #2196f3 }
 
   ul {
     margin: -0.6em 0em 0.6em;

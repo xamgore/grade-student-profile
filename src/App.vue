@@ -74,8 +74,15 @@ export default {
     box-sizing: inherit;
   }
 
-  html, body, #app {
-    height: 100%;
+  html { box-sizing: border-box }
+
+  html, body, #app { height: 100% }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: PT Sans,sans-serif;
+    background-color: rgba(231, 231, 231, 0.2);
   }
 
   .wall {
@@ -87,27 +94,13 @@ export default {
     .wall { max-width: 560px }
   }
 
-
-  html {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: PT Sans,sans-serif;
-    background-color: rgba(231, 231, 231, 0.2);
-  }
-
   #app, #content {
     display: flex;
     flex-direction: column;
     align-items: stretch;
   }
 
-  #app > * {
-    flex-shrink: 0;
-  }
+  #app > * { flex-shrink: 0 }
 
   #content {
     position: relative;
@@ -122,13 +115,10 @@ export default {
   .child-view {
     width: 100%;
     position: absolute;
-    /*transition: all .5s cubic-bezier(.55,0,.1,1);*/
     transition: all .3s ease;
   }
 
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
+  .fade-enter, .fade-leave-active { opacity: 0 }
 
   .fade-enter-active, .fade-leave-active {
     transition: opacity .3s ease;

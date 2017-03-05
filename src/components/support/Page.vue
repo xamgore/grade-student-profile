@@ -64,7 +64,9 @@ export default {
     background-color: #2196F3;
   }
 
-  .button:focus, .button:active { background-color: #0c85e9; }
+  .button:focus, .button:active {
+    background-color: #0c85e9;
+  }
 
   .button[disabled] { background-color: #ccc }
 </style>

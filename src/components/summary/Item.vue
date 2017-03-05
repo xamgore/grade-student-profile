@@ -20,9 +20,7 @@ export default {
 </script>
 
 <style scoped>
-  .item {
-    padding: 0 8px;
-  }
+  .item { padding: 0 8px }
 
   .item:hover, .item:focus {
     background: #f0f0f0;

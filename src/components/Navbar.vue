@@ -85,11 +85,7 @@ export default {
     align-items: center;
   }
 
-  .right > * {
-    padding-left: 0;
-  }
+  .right > * { padding-left: 0 }
 
-  .right {
-    margin-left: auto;
-  }
+  .right { margin-left: auto }
 </style>

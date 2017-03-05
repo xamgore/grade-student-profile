@@ -50,9 +50,7 @@ export default {
 </script>
 
 <style scoped>
-  .page {
-    padding: 10px;
-  }
+  .page { padding: 10px }
 
   button {
     display: block;

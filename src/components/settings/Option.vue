@@ -36,10 +36,7 @@ export default {
   .line .desc {
     margin-right: auto;
     font-size: 1.08em;
-    /*padding-bottom: 0.2em;*/
   }
 
-  .disabled {
-    color: #999;
-  }
+  .disabled { color: #999 }
 </style>
