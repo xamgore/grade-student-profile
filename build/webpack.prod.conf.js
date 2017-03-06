@@ -84,7 +84,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       ServiceWorker: false,
       AppCache: {
         NETWORK: '*',
-        FALLBACK: { '/': '/index.html' },
+        FALLBACK: { '/': '/m/index.html' },
       }
     })
   ]
